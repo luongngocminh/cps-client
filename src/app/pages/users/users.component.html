@@ -1,0 +1,17 @@
+<nb-card>
+  <nb-card-header>User Management</nb-card-header>
+  <nb-card-body>
+    <nb-tabset>
+      <nb-tab tabTitle="Users">
+        <ng2-smart-table [settings]="userSettings" [source]="userSource" 
+          (editConfirm)="updateUser($event)" (deleteConfirm)="deleteUser($event)">
+        </ng2-smart-table>
+      </nb-tab>
+      <nb-tab tabTitle="Whitelisted Emails">
+        <ng2-smart-table [settings]="emailSettings" [source]="emailSource"
+          (createConfirm)="whitelistEmail($event)">
+        </ng2-smart-table>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card-body>
+</nb-card>

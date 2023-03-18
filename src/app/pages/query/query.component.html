@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-body>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-md-3">
+              <input nbInput placeholder="Start Time" formControlName="start" [nbDatepicker]="startpicker" />
+              <nb-date-timepicker #startpicker></nb-date-timepicker>
+            </div>
+            <div class="col-md-3">
+              <input nbInput placeholder="End Time" formControlName="stop" [nbDatepicker]="endpicker" />
+              <nb-date-timepicker #endpicker></nb-date-timepicker>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <nb-select placeholder="Source Node Type" formControlName="ntype">
+                <nb-option *ngFor="let type of [0, 1]" [value]="type">{{
+                  type === 0 ? 'Sensor' : 'Station'
+                  }}</nb-option>
+              </nb-select>
+            </div>
+            <div class="col-md-3">
+              <nb-select placeholder="Measurement Type" formControlName="measurements" multiple>
+                <nb-option *ngFor="
+                    let measurement of [
+                      'battery',
+                      'rtc',
+                      'temperature',
+                      'v_p',
+                      'i_p',
+                      'v_on',
+                      'v_off',
+                      'v_shift',
+                      'v_na'
+                    ]
+                  " [value]="measurement">{{ measurement }}</nb-option>
+              </nb-select>
+            </div>
+            <div class="col-md-3">
+              <input nbInput placeholder="Source Node ID(s)" formControlName="nids" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <button nbButton fullWidth status="primary" type="submit">Search</button>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<button nbButton fullWidth status="primary" (click)="exportCSV()">Export CSV</button>
+<nb-card>
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="source"> </ng2-smart-table>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,26 @@
+<nb-card class="list-card">
+  <nb-card-header>Sensor Nodes</nb-card-header>
+  <nb-card-body class="flex">
+    <div *ngFor="let node of sensorNodes">
+      <ngx-node-card [node]="node"></ngx-node-card>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<nb-card class="list-card">
+  <nb-card-header>Station Nodes</nb-card-header>
+  <nb-card-body class="flex">
+    <div *ngFor="let node of stationNodes">
+      <ngx-node-card [node]="node"></ngx-node-card>
+    </div>
+  </nb-card-body>
+</nb-card>
+<div class="row">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-body>
+        <ng2-smart-table [settings]="tablesettings" [source]="tablesource"> </ng2-smart-table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
