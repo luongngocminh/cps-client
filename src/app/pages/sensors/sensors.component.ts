@@ -209,12 +209,12 @@ export class SensorsComponent implements OnInit, OnDestroy {
         .map(obj => Object.assign({}, { x: new Date(obj['_time']), y: obj['_value'] ?? 0 }));
     };
     const q: NodeQuery = {
-      start: '-5h',
+      start: '-3h',
       stop: '0h',
       nids: ['' + this.currentNodeId],
       ntype: [this.nodeType],
       measurements: ['battery', 'rtc', 'temperature', 'v_p', 'i_p', 'v_on', 'v_off', 'v_shift', 'v_na'],
-      every: '2m',
+      every: '20s',
     };
     this.nodeService
       .queryNodeData(q)

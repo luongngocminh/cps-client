@@ -121,6 +121,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       start: '-5h',
       stop: '0h',
       measurements: ['battery', 'rtc', 'temperature'],
+      every: '20s',
     };
     interval(5_000)
       .pipe(

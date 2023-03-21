@@ -2,6 +2,7 @@ import { delay } from 'rxjs/operators';
 import { AfterViewInit, Component, Input, OnDestroy } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { INode } from '../../../interfaces/node.type';
+import { isBefore } from 'date-fns/esm';
 
 declare const echarts: any;
 
@@ -26,6 +27,10 @@ declare const echarts: any;
             <nb-icon *ngSwitchCase="1" icon="close-circle-outline" status="danger"></nb-icon>
             <nb-icon *ngSwitchCase="2" icon="minus-circle-outline" status="warning"></nb-icon>
           </div>
+          <div class="paragraph-2" *ngIf="leftTimeSeconds(node.nextTriggerAt) > 0">
+            <span>Trigger countdown: </span>
+            <countdown #cd [config]="{ leftTime: leftTimeSeconds(node.nextTriggerAt) }"></countdown>
+          </div>
         </div>
       </nb-card-body>
     </nb-card>
@@ -39,6 +44,7 @@ export class NodeCardComponent implements AfterViewInit, OnDestroy {
     this.chartValue = node.battery;
     this._node = node;
   }
+
   get node() {
     return this._node;
   }
@@ -59,7 +65,21 @@ export class NodeCardComponent implements AfterViewInit, OnDestroy {
   option: any = {};
   themeSubscription: any;
 
-  constructor(private theme: NbThemeService) { }
+  constructor(private theme: NbThemeService) {}
+
+  isPending(nextTrigger: Date) {
+    const now = new Date();
+    const nextrigger = new Date(nextTrigger);
+    return now < nextTrigger;
+
+    // return isBefore(now, nextTrigger);
+  }
+
+  leftTimeSeconds(nextTrigger: string) {
+    const now = new Date();
+    const nextTriggerNum = Date.parse(nextTrigger);
+    return (nextTriggerNum - now.getTime()) / 1000;
+  }
 
   ngAfterViewInit() {
     this.themeSubscription = this.theme

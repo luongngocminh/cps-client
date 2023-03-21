@@ -1,1 +1,36 @@
-<p>manage works!</p>
+<nb-card>
+  <nb-card-header>
+    Configuration Settings
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="configForm">
+      <div class="form-group">
+        <label for="window-timers">Window Timers (ms)</label>
+        <input type="number" id="window-timers" formControlName="windowTimers" placeholder="1000" nbInput />
+      </div>
+      <div class="form-group">
+        <label for="session-timeout">Session Timeout (ms)</label>
+        <input type="number" id="session-timeout" formControlName="sessionTimeout" placeholder="4000" nbInput />
+      </div>
+      <div class="form-group">
+        <label for="node-timeout">Node Timeout (ms)</label>
+        <input type="number" id="node-timeout" formControlName="nodeTimeout" placeholder="3600000" nbInput />
+      </div>
+      <div class="button-container">
+        <button nbButton status="primary" (click)="saveConfig()">Save</button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>
+
+<nb-card>
+  <nb-card-header>
+    Control
+  </nb-card-header>
+  <nb-card-body>
+    <div class="button-container">
+      <button nbButton status="success" (click)="resyncAllNodes()">Resync All Nodes</button>
+      <button nbButton status="warning" (click)="triggerCalibration()">Trigger Calibration</button>
+    </div>
+  </nb-card-body>
+</nb-card>

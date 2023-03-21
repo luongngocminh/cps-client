@@ -30,4 +30,8 @@ export class NodeService {
     }
     return this.http.get<NodeData[]>(API_BASE_ROUTE + `/data/q?${query.join('&')}`);
   }
+
+  broadcastTriggerCalibration() {
+    return this.http.post(API_BASE_ROUTE + '/node/cmd/all/trigger', {});
+  }
 }

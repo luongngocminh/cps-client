@@ -68,6 +68,7 @@
     "ng2-ckeditor": "~1.2.9",
     "ng2-completer": "^9.0.1",
     "ng2-smart-table": "^1.6.0",
+    "ngx-countdown": "^13.0.0",
     "ngx-echarts": "^4.2.2",
     "ngx-socket-io": "^4.2.0",
     "node-sass": "^4.14.1",

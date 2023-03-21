@@ -80,25 +80,8 @@
 <div class="row">
   <div class="col-md-12">
     <nb-card>
-      <nb-card-header>Query Data</nb-card-header>
+      <nb-card-header>Table Data</nb-card-header>
       <nb-card-body>
-        <form>
-          <div class="form-group row">
-            <input nbInput placeholder="Start Time" [nbDatepicker]="startpicker" />
-            <nb-date-timepicker #startpicker></nb-date-timepicker>
-            <input nbInput placeholder="End Time" [nbDatepicker]="endpicker" />
-            <nb-date-timepicker #endpicker></nb-date-timepicker>
-            <nb-select selected="temperature">
-              <nb-option value="temperature">Temperature</nb-option>
-              <nb-option *ngIf="nodeType === 'sensor'" value="battery">battery</nb-option>
-              <nb-option *ngIf="nodeType === 'station'" value="ip">Ip</nb-option>
-              <nb-option *ngIf="nodeType === 'sensor'" value="von">Von</nb-option>
-              <nb-option *ngIf="nodeType === 'sensor'" value="voff">Voff</nb-option>
-              <nb-option *ngIf="nodeType === 'sensor'" value="vna">Vna</nb-option>
-            </nb-select>
-            <button type="submit" nbButton status="primary">Query</button>
-          </div>
-        </form>
         <ng2-smart-table [settings]="tablesettings" [source]="tablesource"> </ng2-smart-table>
       </nb-card-body>
     </nb-card>

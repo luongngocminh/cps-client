@@ -1,5 +1,6 @@
 export interface INode {
   latestConnectedAt: Date;
+  nextTriggerAt?: string;
   status: number;
   parent?: number;
   _id: string;

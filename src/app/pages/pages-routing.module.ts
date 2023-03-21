@@ -34,6 +34,10 @@ const routes: Routes = [
         path: 'query',
         loadChildren: () => import('./query/query.module').then(m => m.QueryModule),
       },
+      {
+        path: 'manage',
+        loadChildren: () => import('./manage/manage.module').then(m => m.ManageModule),
+      },
       // {
       //   path: 'users',
       // },
@@ -54,4 +58,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class PagesRoutingModule {}
+export class PagesRoutingModule { }
