@@ -9,6 +9,7 @@ import { NodeService } from '../../services/node.service';
 import 'chartjs-adapter-date-fns';
 import { enUS } from 'date-fns/locale';
 import { BaseChartDirective } from 'ng2-charts';
+import { GRAPH_COLORS } from '../../share/constants';
 
 @Component({
   selector: 'ngx-sensors',
@@ -34,6 +35,15 @@ export class SensorsComponent implements OnInit, OnDestroy {
         },
       },
     },
+    elements: {
+      line: {
+        tension: 0,
+        borderWidth: 1,
+      },
+      point: {
+        borderWidth: 1,
+      },
+    },
   };
 
   // vna is -589
@@ -42,49 +52,77 @@ export class SensorsComponent implements OnInit, OnDestroy {
   // ip is int 5486 +- 1
   // vshift is int 320 +- 1
   // chartjs options for each of these with min and max values but padding about +-500 of the range
+  //
+  vnaColors = this.pickRandomFromGraphColors();
+  voffColors = this.pickRandomFromGraphColors();
+  vonColors = this.pickRandomFromGraphColors();
+  ipColors = this.pickRandomFromGraphColors();
+  vshiftColors = this.pickRandomFromGraphColors();
+  tempColors = this.pickRandomFromGraphColors();
+  batteryColors = this.pickRandomFromGraphColors();
 
   vnaOption = {
     responsive: true,
+    ...this.chartOptions,
+    backgroundColor: this.vnaColors,
+    borderColor: this.vnaColors,
+    pointBackgroundColor: this.vnaColors,
     scales: {
       ...this.chartOptions.scales,
       y: {
-        min: -1089,
-        max: -89,
+        min: -1000,
+        max: -200,
       },
     },
   };
   voffOption = {
+    ...this.chartOptions,
     responsive: true,
+    backgroundColor: this.voffColors,
+    borderColor: this.voffColors,
+    pointBackgroundColor: this.voffColors,
     scales: {
       ...this.chartOptions.scales,
       y: {
-        min: -1409,
-        max: -408,
+        min: -1200,
+        max: -500,
       },
     },
   };
   vonOption = {
+    ...this.chartOptions,
     responsive: true,
+    backgroundColor: this.vonColors,
+    borderColor: this.vonColors,
+    pointBackgroundColor: this.vonColors,
     scales: {
       ...this.chartOptions.scales,
       y: {
-        min: -1409,
-        max: -408,
+        min: -1200,
+        max: -500,
       },
     },
   };
   ipOption = {
+    ...this.chartOptions,
     responsive: true,
+    backgroundColor: this.ipColors,
+    borderColor: this.ipColors,
+    pointBackgroundColor: this.ipColors,
     scales: {
       ...this.chartOptions.scales,
       y: {
-        min: 4986,
-        max: 5986,
+        min: 5100,
+        max: 5800,
       },
     },
   };
   vshiftOption = {
+    ...this.chartOptions,
     responsive: true,
+    backgroundColor: this.vshiftColors,
+    borderColor: this.vshiftColors,
+    pointBackgroundColor: this.vshiftColors,
     scales: {
       ...this.chartOptions.scales,
       y: {
@@ -94,7 +132,11 @@ export class SensorsComponent implements OnInit, OnDestroy {
     },
   };
   tempOption = {
+    ...this.chartOptions,
     responsive: true,
+    backgroundColor: this.tempColors,
+    borderColor: this.tempColors,
+    pointBackgroundColor: this.tempColors,
     scales: {
       ...this.chartOptions.scales,
       y: {
@@ -104,7 +146,11 @@ export class SensorsComponent implements OnInit, OnDestroy {
     },
   };
   battOption = {
+    ...this.chartOptions,
     responsive: true,
+    backgroundColor: this.batteryColors,
+    borderColor: this.batteryColors,
+    pointBackgroundColor: this.batteryColors,
     scales: {
       ...this.chartOptions.scales,
       y: {
@@ -171,7 +217,7 @@ export class SensorsComponent implements OnInit, OnDestroy {
   };
   @ViewChildren(BaseChartDirective) charts: QueryList<BaseChartDirective>;
   constructor(private nodeService: NodeService, private route: ActivatedRoute, private router: Router) {
-    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
       return false;
     };
     this.currentNodeId = +this.route.snapshot.params['id'];
@@ -202,6 +248,10 @@ export class SensorsComponent implements OnInit, OnDestroy {
     this.getNodeHealth();
   }
 
+  pickRandomFromGraphColors() {
+    return GRAPH_COLORS[Math.floor(Math.random() * GRAPH_COLORS.length)];
+  }
+
   getNodeHealth() {
     const unpackData = (measurement, array) => {
       return array
@@ -229,6 +279,7 @@ export class SensorsComponent implements OnInit, OnDestroy {
         takeWhile(() => this.alive),
       )
       .subscribe(response => {
+        response = response.filter(obj => obj.result === '_result');
         // this.multiRTC = [
         //   {
         //     label: 'RTC',

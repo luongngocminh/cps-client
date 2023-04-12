@@ -1,7 +1,15 @@
 <nb-card class="list-card">
   <nb-card-header>Sensor Nodes</nb-card-header>
   <nb-card-body class="flex">
-    <div *ngFor="let node of sensorNodes">
+    <div class="col-md-12">
+      <span>Filter by parent station</span>
+
+      <nb-select placeholder="Select A Parent" [(selected)]="currentStationId" (selectedChange)="changeStation($event)">
+        <nb-option [value]="-1">All</nb-option>
+        <nb-option *ngFor="let node of stationNodes" [value]="node.nid">Parent station Id {{ node.nid }}</nb-option>
+      </nb-select>
+    </div>
+    <div *ngFor="let node of filteredSensorNodes">
       <ngx-node-card [node]="node"></ngx-node-card>
     </div>
   </nb-card-body>

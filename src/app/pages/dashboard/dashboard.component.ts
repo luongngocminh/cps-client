@@ -66,6 +66,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
       },
     },
   };
+  currentStationId: number = -1;
+
+  get filteredSensorNodes(): INode[] {
+    return this.sensorNodes.filter(node =>
+      this.currentStationId === -1 ? node : node.parent === this.currentStationId,
+    );
+  }
 
   tablesource: LocalDataSource = new LocalDataSource();
   constructor(private nodeService: NodeService, private toastrService: NbToastrService) {
@@ -131,6 +138,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.tablesource.load(response.reverse());
       });
+  }
+
+  changeStation(e) {
+    this.currentStationId = e.target.value;
   }
 
   ngOnDestroy() {

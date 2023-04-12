@@ -14,10 +14,10 @@ export class UserService {
     return this.http.get<{ data: string[] }>(API_BASE_ROUTE + '/auth/whitelist');
   }
   deleteUser(id: string) {
-    return this.http.delete(API_BASE_ROUTE + '/users/' + id);
+    return this.http.post(API_BASE_ROUTE + '/users/delete/' + id, {});
   }
   updateUser(selectedUser: IUser) {
-    return this.http.put(API_BASE_ROUTE + '/users/' + selectedUser._id, selectedUser);
+    return this.http.post(API_BASE_ROUTE + '/users/update/' + selectedUser._id, selectedUser);
   }
 
   getAllUsers(): Observable<{ data: IUser[] }> {

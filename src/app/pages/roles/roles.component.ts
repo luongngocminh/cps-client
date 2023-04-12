@@ -17,11 +17,13 @@ export class RolesComponent implements OnInit {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
+      confirmCreate: true,
     },
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
+      confirmSave: true,
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
@@ -35,11 +37,9 @@ export class RolesComponent implements OnInit {
         title: 'Permissions',
         editable: true,
         type: 'string',
-        // valuePrepareFunction: (cell, row) => {
-        //   console.log(cell, row);
-        //   return cell.join('|');
-        //   // return this.cell.join('|');
-        // },
+        valuePrepareFunction: (cell, row) => {
+          return cell.join('|');
+        },
       },
     },
   };

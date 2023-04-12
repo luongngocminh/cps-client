@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NbToastrService } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
+import { IRole } from '../../interfaces/role.type';
 import { IUser } from '../../interfaces/user.type';
 import { RoleService } from '../../services/role.service';
 import { UserService } from '../../services/user.service';
@@ -33,6 +34,7 @@ export class UsersComponent implements OnInit {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
+      confirmSave: true,
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
@@ -58,6 +60,7 @@ export class UsersComponent implements OnInit {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
+      confirmSave: true,
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
@@ -114,13 +117,20 @@ export class UsersComponent implements OnInit {
 
   getUsers() {
     this.userService.getAllUsers().subscribe(response => {
+      response.data = response.data.map((user: IUser & { role: IRole }) => {
+        return {
+          ...user,
+          role: user.role.name,
+        };
+      });
+
       this.userSource.load(response.data);
     });
   }
 
   getRoles(): void {
     this.roleService.getAllRoles().subscribe(roles => {
-      const rolesWithTitle = roles.map(role => ({ name: role.name, title: role.name }));
+      const rolesWithTitle = roles.map(role => ({ name: role.name, title: role.name, value: role.name }));
       this.roles = rolesWithTitle;
       this.userSettings.columns.role.editor.config.list = rolesWithTitle;
       this.userSettings = {
